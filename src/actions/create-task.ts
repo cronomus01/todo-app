@@ -2,6 +2,7 @@ import { redirect } from "react-router-dom";
 
 import Task from "../types/Task";
 
+// @ts-ignore
 export async function action({request, params}) {
   const formData = await request.formData();
   const task = JSON.stringify(Object.fromEntries(formData));

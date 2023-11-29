@@ -1,13 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useLoaderData } from "../hooks/useLoaderData";
-import { Outlet } from "react-router-dom";
 import Task from "../types/Task";
 const Main = () => {
   const [path, setPath] = useState("/");
   const [newAdded, setNewAdded] = useState(false);
-  const [dropped, setDropped] = useState(false);
 
-  // const [setNewAdded, setNewAdded] = useState<boolean>(true);
   // const [setNewAddedId, setNewAddedId] = useState<number>(0);
 
   const pendingColor = "border-slate-300";
@@ -198,8 +195,6 @@ const Main = () => {
         localStorage.setItem("task", JSON.stringify(newTaskList));
       }
     }
-
-    setDropped(true);
 
     event.stopPropagation();
   };
