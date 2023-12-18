@@ -15,9 +15,7 @@ const Tasks = () => {
                 key={task.id}
                 className="py-2 px-2 border rounded hover:border-slate-800 flex gap-2 items-center justify-between"
               >
-                <h2 className="w-full">
-                  {task.title} id {task.id}
-                </h2>
+                <h2 className="w-full">{task.title}</h2>
                 <div>
                   <NavLink to={`/tasks/${task.id}`}>
                     <button className="text-sm text-rose-700">Delete</button>
