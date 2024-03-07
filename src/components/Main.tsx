@@ -13,8 +13,6 @@ const Main = () => {
 
   const tasks = useLoaderData<Task[]>();
 
-  console.log("Main component rerendered");
-
   const currentDragging = useRef<HTMLLIElement>();
 
   const pendingContainer = useRef<HTMLUListElement>(null);
@@ -220,7 +218,7 @@ const Main = () => {
 
   const handleDrag = (
     event: React.DragEvent<HTMLLIElement | HTMLUListElement>,
-    id: number | string
+    id: string
   ) => {
     event.preventDefault();
     // console.log("dragging");
@@ -266,8 +264,8 @@ const Main = () => {
     event.stopPropagation();
   };
 
-  const newAddedTask = (id: number, date: Date) => {
-    if (tasks[0].id == id) {
+  const newAddedTask = (id: string, date: Date) => {
+    if (tasks[0].id === id) {
       if (Math.abs(new Date(date).getTime() - new Date().getTime()) < 300000)
         return <p className="text-green-400">New</p>;
     }
@@ -278,8 +276,7 @@ const Main = () => {
   };
 
   return (
-    <main className="flex items-start flex-col relative p-2">
-      <h1 className="text-lg">My tasks</h1>
+    <main className="flex items-start flex-col relative px-3 border-b-[1px]">
       <div className="flex gap-3 justify-between w-full h-full">
         <section className="mt-2 w-full max-w-sm md:max-w-lg">
           <h1 className="pointer-events-none">Pending</h1>
@@ -320,7 +317,7 @@ const Main = () => {
               )}
           </ul>
         </section>
-        <div className="h-full border"></div>
+        <div className="h-full border-r-[1px]"></div>
         <section className="mt-2 w-full max-w-sm md:max-w-lg">
           <h1>Working on</h1>
           <ul
@@ -359,7 +356,7 @@ const Main = () => {
               )}
           </ul>
         </section>
-        <div className="h-full border"></div>
+        <div className="h-full border-r-[1px]"></div>
         <section className="mt-2 w-full max-w-sm md:max-w-lg">
           <h1>Completed</h1>
           <ul

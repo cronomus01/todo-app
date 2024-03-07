@@ -1,19 +1,26 @@
 import { redirect } from "react-router-dom";
-
 import Task from "../types/Task";
 
-// @ts-ignore
-export async function action({request, params}) {
+const getTasks = () => {
+  if (localStorage.getItem("task")) {
+    return JSON.parse(localStorage.getItem("task")!);
+  } else {
+    return []
+  }
+};
+
+
+export async function createTaskAction({request}: {request: Request}) {
   const formData = await request.formData();
   const task = JSON.stringify(Object.fromEntries(formData));
-  saveToLocalStorage(JSON.parse(task));
+  createTask(JSON.parse(task));
   return redirect('/')
 }
 
-const saveToLocalStorage = (task: Task) => {
+const createTask = (task: Task) => {
   const newTask = {
     ...task, 
-    id: Math.floor(Math.random() * 10000), 
+    id: Math.abs(Math.floor(Math.random() * 10000)).toString(), 
     isCompleted: false, 
     isWorking: false,
     isPending: false,
@@ -31,3 +38,10 @@ const saveToLocalStorage = (task: Task) => {
   }
   
 }
+
+export async function createTaskLoader(): Promise<Task[]> {
+  const tasks = await getTasks();
+  return tasks;
+}
+
+

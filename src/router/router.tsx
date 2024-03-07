@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import CreateTask from "../components/tasks/CreateTask";
-import { action as createTask } from "../actions/create-task";
-import { loader as createTaskLoader } from "../loader/create-task";
+import { createTaskAction, createTaskLoader } from "../tasks/create-task";
+import { deleteTaskAction } from "../tasks/delete-task";
 import App from "../App";
 
 const router = createBrowserRouter([
@@ -13,8 +13,12 @@ const router = createBrowserRouter([
   {
     path: "/tasks/create",
     element: <CreateTask />,
-    action: createTask,
+    action: createTaskAction,
     loader: createTaskLoader,
+  },
+  {
+    path: "/tasks/:id",
+    action: deleteTaskAction
   },
 ]);
 

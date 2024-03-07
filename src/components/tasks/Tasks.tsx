@@ -1,5 +1,5 @@
 import Task from "../../types/Task";
-import { NavLink } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { useLoaderData } from "../../hooks/useLoaderData";
 
 const Tasks = () => {
@@ -10,19 +10,18 @@ const Tasks = () => {
       <ul className="flex flex-col gap-2">
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <NavLink to={`/tasks/${task.id}/edit`} draggable={false}>
               <li
                 key={task.id}
-                className="py-2 px-2 border rounded hover:border-slate-800 flex gap-2 items-center justify-between"
+                className="py-2 px-2 border rounded hover:border-slate-800 flex gap-2 justify-between items-start"
               >
-                <h2 className="w-full">{task.title}</h2>
-                <div>
-                  <NavLink to={`/tasks/${task.id}`}>
-                    <button className="text-sm text-rose-700">Delete</button>
-                  </NavLink>
-                </div>
+                <article className="overflow-hidden">
+                  <h1 className="w-full">{task.title}</h1>
+                  <p className="text-gray-600 truncate">{task.description}</p>
+                </article>
+                <Form action={`/tasks/${task.id}`} method="POST">
+                  <button className="text-sm text-rose-700">Delete</button>
+                </Form>
               </li>
-            </NavLink>
           ))
         ) : (
           <li className="text-slate-800" key={0}>
