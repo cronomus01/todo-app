@@ -28,7 +28,7 @@ const Task = ({ task }: { task: TaskType }) => {
             onClick={() => console.log('clicked')}
             draggable="true"
         >
-            <h2 className="select-none">{task.title}</h2>
+            <h2 className="select-none font-bold">{task.title}</h2>
             <p className="select-none">{task.description}</p>
         </li>
     );

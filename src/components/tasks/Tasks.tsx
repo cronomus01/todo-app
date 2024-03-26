@@ -15,11 +15,11 @@ const Tasks = ({ tasks, search }: TasksProps) => {
         return (
             <li
                 key={task.id}
-                className="border flex gap-2 p-2 rounded items-center"
+                className="border flex justify-between gap-2 p-2 rounded items-center overflow-hidden text-ellipsis"
             >
-                <article className="basis-full">
-                    <h2 className="font-bold">{task.title}</h2>
-                </article>
+                <h2 className="font-bold overflow-hidden truncate">
+                    {task.title}
+                </h2>
                 <Form action={`/tasks/${task.id}`} method="POST">
                     <button className="text-sm text-rose-700">Remove</button>
                 </Form>
