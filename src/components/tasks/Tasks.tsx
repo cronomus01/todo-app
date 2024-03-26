@@ -29,9 +29,13 @@ const Tasks = ({ tasks, search }: TasksProps) => {
 
     return (
         <>
-            <ul className="flex flex-col gap-2">
-                {items.length > 0 ? items : <p>No items</p>}
-            </ul>
+            {items.length > 0 ? (
+                <ul className="flex flex-col gap-2">{items}</ul>
+            ) : (
+                <p className=" text-gray-400 px-2">
+                    You have no tasks assigned at the moment.
+                </p>
+            )}
         </>
     );
 };
