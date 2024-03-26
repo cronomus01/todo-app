@@ -1,36 +1,33 @@
-import Task from "../../types/Task";
-import { Form } from "react-router-dom";
-import { useLoaderData } from "../../hooks/useLoaderData";
+import { Form } from 'react-router-dom';
 
-const Tasks = () => {
-  const tasks = useLoaderData<Task[]>();
+const Tasks = ({ tasks, search }) => {
+    const items = tasks.map((task) => {
+        // if (task.title.toLowerCase().indexOf(search.toLowerCase()) === -1) {
+        //     return;
+        // }
 
-  return (
-    <nav className="mt-6 px-2">
-      <ul className="flex flex-col gap-2">
-        {tasks.length > 0 ? (
-          tasks.map((task) => (
-              <li
+        return (
+            <li
                 key={task.id}
-                className="py-2 px-2 border rounded hover:border-slate-800 flex gap-2 justify-between items-start"
-              >
-                <article className="overflow-hidden">
-                  <h1 className="w-full">{task.title}</h1>
-                  <p className="text-gray-600 truncate">{task.description}</p>
+                className="border flex gap-2 p-2 rounded items-center"
+            >
+                <article className="basis-full">
+                    <h2 className="font-bold">{task.title}</h2>
                 </article>
                 <Form action={`/tasks/${task.id}`} method="POST">
-                  <button className="text-sm text-rose-700">Delete</button>
+                    <button className="text-sm text-rose-700">Remove</button>
                 </Form>
-              </li>
-          ))
-        ) : (
-          <li className="text-slate-800" key={0}>
-            No tasks...
-          </li>
-        )}
-      </ul>
-    </nav>
-  );
+            </li>
+        );
+    });
+
+    return (
+        <>
+            <ul className="flex flex-col gap-2">
+                {items.length > 0 ? items : <p>No items</p>}
+            </ul>
+        </>
+    );
 };
 
 export default Tasks;
