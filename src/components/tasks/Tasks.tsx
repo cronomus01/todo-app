@@ -1,10 +1,16 @@
 import { Form } from 'react-router-dom';
+import { Task as TaskType } from '../../types/Task';
 
-const Tasks = ({ tasks, search }) => {
+type TasksProps = {
+    tasks: TaskType[];
+    search: string;
+};
+
+const Tasks = ({ tasks, search }: TasksProps) => {
     const items = tasks.map((task) => {
-        // if (task.title.toLowerCase().indexOf(search.toLowerCase()) === -1) {
-        //     return;
-        // }
+        if (task.title.toLowerCase().indexOf(search.toLowerCase()) === -1) {
+            return;
+        }
 
         return (
             <li

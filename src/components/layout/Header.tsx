@@ -1,7 +1,7 @@
 import MyProfileImage from '../../assets/default-light.webp';
 import Searchbar from '../Searchbar';
 
-function Avatar({ icon }) {
+function Avatar({ icon }: { icon: string }) {
     return (
         <>
             <figure className="flex gap-2 items-center justify-start">

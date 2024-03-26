@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
-import Searchbar from '../Searchbar';
 import Tasks from '../tasks/Tasks';
+import { Task as TaskType } from '../../types/Task';
 
-const Sidebar = ({ tasks }) => {
+interface SidebarProps {
+    tasks: TaskType[];
+}
+
+const Sidebar = ({ tasks }: SidebarProps) => {
     return (
         <>
             <aside className="h-full border-r-[1px] px-2 pt-4 flex flex-col gap-2">

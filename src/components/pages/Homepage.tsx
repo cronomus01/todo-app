@@ -3,9 +3,10 @@ import Sidebar from '../layout/Sidebar';
 import Header from '../layout/Header';
 import CreateTask from './CreateTask';
 import DraggableTasks from '../tasks/DraggableTasks';
+import { Task } from '../../types/Task';
 
 const Homepage = () => {
-    const tasks = useLoaderData();
+    const tasks = useLoaderData() as Task[];
 
     return (
         <>

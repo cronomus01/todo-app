@@ -1,4 +1,5 @@
-import { redirect } from 'react-router-dom';
+import { ActionFunction, redirect } from 'react-router-dom';
+import { Task } from '../types/Task';
 
 export async function createTask({ request }: { request: Request }) {
     const formData = await request.formData();
@@ -29,8 +30,14 @@ export async function getTasks() {
     return [];
 }
 
-export async function deleteTask({ params }) {
-    const tasks = JSON.parse(localStorage.getItem('MY_TASKS')!);
+interface DeleteTaskParams {
+    id: string;
+}
+
+export const deleteTask: ActionFunction<DeleteTaskParams> = async ({
+    params,
+}) => {
+    const tasks = JSON.parse(localStorage.getItem('MY_TASKS')!) as Task[];
     const index = tasks.findIndex((task) => task.id === params.id);
 
     if (index >= -1) {
@@ -39,4 +46,4 @@ export async function deleteTask({ params }) {
     }
 
     return redirect('/');
-}
+};

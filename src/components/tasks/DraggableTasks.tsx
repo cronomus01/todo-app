@@ -1,8 +1,18 @@
 import { useLoaderData } from 'react-router-dom';
 import Task from './Task';
-import { useState } from 'react';
+import { Task as TaskType } from '../../types/Task';
 
-function Pending({ tasks, onHandleDrop, onHandleDragOver }) {
+type DraggableTaskProps = {
+    tasks: TaskType[];
+    onHandleDrop: (event: React.DragEvent<HTMLUListElement>) => void;
+    onHandleDragOver: (event: React.DragEvent<HTMLUListElement>) => void;
+};
+
+function Pending({
+    tasks,
+    onHandleDrop,
+    onHandleDragOver,
+}: DraggableTaskProps) {
     const rows = tasks.map((task) => <Task task={task} key={task.id} />);
 
     return (
@@ -21,7 +31,11 @@ function Pending({ tasks, onHandleDrop, onHandleDragOver }) {
     );
 }
 
-function Working({ tasks, onHandleDrop, onHandleDragOver }) {
+function Working({
+    tasks,
+    onHandleDrop,
+    onHandleDragOver,
+}: DraggableTaskProps) {
     const rows = tasks.map((task) => <Task task={task} key={task.id} />);
     return (
         <div className="basis-full border-r-[1px] flex flex-col px-2 pt-2">
@@ -39,7 +53,11 @@ function Working({ tasks, onHandleDrop, onHandleDragOver }) {
     );
 }
 
-function Completed({ tasks, onHandleDrop, onHandleDragOver }) {
+function Completed({
+    tasks,
+    onHandleDrop,
+    onHandleDragOver,
+}: DraggableTaskProps) {
     const rows = tasks.map((task) => <Task task={task} key={task.id} />);
     return (
         <div className="basis-full border-r-[1px] flex flex-col px-2 pt-2 ">
@@ -57,10 +75,13 @@ function Completed({ tasks, onHandleDrop, onHandleDragOver }) {
     );
 }
 
-function DraggableTasks() {
-    const [color, setColor] = useState('border-red-500');
+type TaskDictionary<T> = {
+    [key: string]: T;
+};
 
-    const tasks = useLoaderData();
+function DraggableTasks() {
+    const tasks = useLoaderData() as TaskType[];
+
     const handleDragOver = (
         event: React.DragEvent<HTMLLIElement | HTMLUListElement>,
     ) => {
@@ -68,22 +89,21 @@ function DraggableTasks() {
         event.dataTransfer.dropEffect = 'move';
     };
 
-    const handleDrop = (event: React.DragEvent<HTMLUListElement>) => {
+    const saveTasks = async (tasks: TaskType[]) => {
+        localStorage.setItem('MY_TASKS', JSON.stringify(tasks));
+    };
+
+    const handleDrop = async (event: React.DragEvent<HTMLUListElement>) => {
         event.preventDefault();
-        console.log(`task droped and is now ${event.target.id}`);
 
-        // if (event.target.id === 'working') {
-        //     setColor('border-cyan-500');
-        // } else if (event.target.id === 'completed') {
-        //     setColor('border-green-500');
-        // }
+        const container = event.target as HTMLUListElement;
+
+        console.log(`task droped and is now ${container.id}`);
+
         const data = event.dataTransfer.getData('text');
-
         const item = document.getElementById(data)!;
 
-        console.log(event.target.id);
-
-        switch (event.target.id) {
+        switch (container.id) {
             case 'working':
                 item.classList.remove('border-green-500');
                 item.classList.remove('border-red-500');
@@ -100,20 +120,24 @@ function DraggableTasks() {
                 item.classList.add('border-red-500');
         }
 
-        event.target.appendChild(item);
+        container.appendChild(item);
 
-        const updatedTasks = tasks.map((task) => {
-            if (task.id == data) {
-                task.status = event.target.id;
-            }
+        if (container.id) {
+            const updatedTasks = tasks.map((task) => {
+                if (task.id == data) {
+                    task.status = container.id;
+                }
 
-            return task;
-        });
+                return task;
+            });
 
-        localStorage.setItem('MY_TASKS', JSON.stringify(updatedTasks));
+            await saveTasks(updatedTasks);
+        }
+
+        return;
     };
 
-    const TaskDictionary = {};
+    const TaskDictionary: TaskDictionary<TaskType[]> = {};
     let lastTaskStatus = '';
 
     tasks.forEach((task) => {

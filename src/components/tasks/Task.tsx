@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { Task as TaskType } from '../../types/Task';
 
-const Task = ({ task }) => {
-    const handleDragStart = (event: React.DragEvent) => {
+const Task = ({ task }: { task: TaskType }) => {
+    const handleDragStart = (event: React.DragEvent<HTMLLIElement>) => {
         console.log(`task dragging started`);
+        const task = event.target as HTMLLIElement;
         console.log(event.dataTransfer);
-        event.dataTransfer.setData('text/plain', event.target.id);
+        event.dataTransfer.setData('text/plain', task.id);
         event.dataTransfer.effectAllowed = 'move';
     };
 
