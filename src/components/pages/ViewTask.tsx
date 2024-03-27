@@ -1,8 +1,7 @@
 import { Link, useLoaderData } from 'react-router-dom';
-import TaskForm from '../tasks/TaskForm';
 import { Task } from '../../types/Task';
 
-const CreateTask = () => {
+const ViewTask = () => {
     const task = useLoaderData() as Task;
     return (
         <>
@@ -26,10 +25,10 @@ const CreateTask = () => {
                         Back
                     </button>
                 </Link>
-                <TaskForm task={task} />
+                <h1>Task {task.id}</h1>
             </section>
         </>
     );
 };
 
-export default CreateTask;
+export default ViewTask;

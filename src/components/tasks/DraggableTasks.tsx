@@ -101,7 +101,7 @@ function DraggableTasks() {
         console.log(`task droped and is now ${container.id}`);
 
         const data = event.dataTransfer.getData('text');
-        const item = document.getElementById(data)!;
+        const item = document.getElementById(data)! as HTMLLIElement;
 
         switch (container.id) {
             case 'working':
