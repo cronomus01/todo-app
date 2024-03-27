@@ -35,8 +35,9 @@ const Task = ({ task }: { task: TaskType }) => {
             onClick={() => console.log('clicked')}
             draggable="true"
         >
+            {task.id}
             <Link to={`/tasks/${task.id}`} draggable="false">
-                <article>
+                <article className="pr-3">
                     <h2 className="select-none font-bold">{task.title}</h2>
                     <p className="select-none">{task.description}</p>
                 </article>

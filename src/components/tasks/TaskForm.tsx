@@ -82,10 +82,8 @@ const TaskForm = ({ task }: TaskFormProps) => {
         setChecklist(newValues);
         setFormData((prevFormData) => ({
             ...prevFormData,
-            checklist: newValues.map((value) => value),
+            checklist: newValues.filter((checklist) => checklist.name),
         }));
-
-        console.log(newValues);
     };
 
     const handleAddChecklist = () => {

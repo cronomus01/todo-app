@@ -7,7 +7,6 @@ export async function createTask({ request }: { request: Request }) {
     const task = {
         ...response,
         id: Math.abs(Math.floor(Math.random() * 10000)).toString(),
-        status: 'pending',
         dateCreated: new Date(),
     };
 
