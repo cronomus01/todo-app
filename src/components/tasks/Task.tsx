@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Task as TaskType } from '../../types/Task';
 
 const Task = ({ task }: { task: TaskType }) => {
@@ -20,16 +21,31 @@ const Task = ({ task }: { task: TaskType }) => {
         }
     };
 
+    const completedChecklist = task.checklist.filter(
+        (checklist) => checklist.isChecked,
+    ).length;
+
+    const totalChecklist = task.checklist.length;
+
     return (
         <li
             id={task.id}
             onDragStart={(event) => handleDragStart(event)}
-            className={`cursor-pointer px-3 py-2 rounded-lg border ${initBorderColor()}`}
+            className={`cursor-pointer px-3 py-2 rounded-lg relative border ${initBorderColor()}`}
             onClick={() => console.log('clicked')}
             draggable="true"
         >
-            <h2 className="select-none font-bold">{task.title}</h2>
-            <p className="select-none">{task.description}</p>
+            <Link to={`/tasks/${task.id}`} draggable="false">
+                <article>
+                    <h2 className="select-none font-bold">{task.title}</h2>
+                    <p className="select-none">{task.description}</p>
+                </article>
+                <div className="absolute top-0 right-0 m-2">
+                    <span>
+                        {completedChecklist}/{totalChecklist}
+                    </span>
+                </div>
+            </Link>
         </li>
     );
 };

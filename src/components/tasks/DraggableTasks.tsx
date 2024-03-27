@@ -93,12 +93,14 @@ function DraggableTasks() {
         localStorage.setItem('MY_TASKS', JSON.stringify(tasks));
     };
 
-    const handleDrop = async (event: React.DragEvent<HTMLUListElement>) => {
+    const handleDrop = async (
+        event: React.DragEvent<HTMLUListElement>,
+    ): Promise<void> => {
         event.preventDefault();
 
-        const container = event.target as HTMLUListElement;
+        const container = event.target;
 
-        console.log(`task droped and is now ${container.id}`);
+        if (!(container instanceof HTMLUListElement)) return;
 
         const data = event.dataTransfer.getData('text');
         const item = document.getElementById(data)! as HTMLLIElement;
@@ -119,9 +121,6 @@ function DraggableTasks() {
                 item.classList.remove('border-green-500');
                 item.classList.add('border-red-500');
         }
-
-        container.appendChild(item);
-
         if (container.id) {
             const updatedTasks = tasks.map((task) => {
                 if (task.id == data) {
@@ -134,7 +133,8 @@ function DraggableTasks() {
             await saveTasks(updatedTasks);
         }
 
-        return;
+        container.appendChild(item);
+        console.log(`task droped and is now ${container.id}`);
     };
 
     const TaskDictionary: TaskDictionary<TaskType[]> = {};
